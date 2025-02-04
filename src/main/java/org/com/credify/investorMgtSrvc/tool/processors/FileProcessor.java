@@ -25,6 +25,7 @@ public abstract class FileProcessor<T, S> {
 
     public void process(String contentFile, String replaceValuesFile, ObjectMapper objectMapper, String pathToDeliverFiles) {
         try {
+            log.info("Processing file %s".formatted(getProcessFileType()));
             List<T> outputEntities = replaceValues(contentFile, replaceValuesFile, objectMapper);
             generatePages(outputEntities, pathToDeliverFiles);
             generateLiquibaseScripts(outputEntities, pathToDeliverFiles);

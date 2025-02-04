@@ -98,10 +98,11 @@ public class Main {
                             }
 
                         } catch (IOException e) {
-                            log.error(String.format("Fail reading file type: %s | file name: %s", key, fileSet.getDataFile()), e);
+                            log.error("Fail reading file type: %s | file name: %s".formatted(key, fileSet.getDataFile()), e);
                             throw new RuntimeException(e);
                         }
                     });
+        log.info("Completed! Check output path: %s/output".formatted(rootPathFiles));
     }
 
     private static void validatePath(String rootPathFiles) {
@@ -150,7 +151,7 @@ public class Main {
                     stream(Objects.requireNonNull(outputFolder.list())).
                     map(file -> new File(outputFolder, file)).
                     forEach(File::delete);
-            log.info("Output folder empty.");
+            log.info("Output folder successfully empty.");
         }
     }
 
