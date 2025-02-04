@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM account_config WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="account_config" th:each="accountConfig, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('account_config_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${accountConfig.investmentAccount.id}" th:if="${accountConfig.investmentAccount.id != null}"/>
+			<column name="collection31to60Fee" th:valueNumeric="${accountConfig.collection31to60Fee}" th:if="${accountConfig.collection31to60Fee != null}"/>
+			<column name="collection61to90Fee" th:valueNumeric="${accountConfig.collection61to90Fee}" th:if="${accountConfig.collection61to90Fee != null}"/>
+			<column name="collection91to120Fee" th:valueNumeric="${accountConfig.collection91to120Fee}" th:if="${accountConfig.collection91to120Fee != null}"/>
+			<column name="recovery_debt_sales_fee" th:valueNumeric="${accountConfig.recoveryDebtSalesFee}" th:if="${accountConfig.recoveryDebtSalesFee != null}"/>
+			<column name="recovery_borrower_payment_fee" th:valueNumeric="${accountConfig.recoveryBorrowerPaymentFee}" th:if="${accountConfig.recoveryBorrowerPaymentFee != null}"/>
+			<column name="recovery_settlements_fee" th:valueNumeric="${accountConfig.recoverySettlementsFee}" th:if="${accountConfig.recoverySettlementsFee != null}"/>
+			<column name="loan_trailing_fee" th:valueNumeric="${accountConfig.loanTrailingFee}" th:if="${accountConfig.loanTrailingFee != null}"/>
+			<column name="seasoning_max_amount" th:valueNumeric="${accountConfig.seasoningMaxAmount}" th:if="${accountConfig.seasoningMaxAmount != null}"/>
+			<column name="default_service_fee_rate" th:valueNumeric="${accountConfig.defaultServiceFeeRate}" th:if="${accountConfig.defaultServiceFeeRate != null}"/>
+			<column name="service_fee_escrow_rate" th:valueNumeric="${accountConfig.serviceFeeEscrowRate}" th:if="${accountConfig.serviceFeeEscrowRate != null}"/>
+			<column name="purchase_premium" th:valueNumeric="${accountConfig.purchasePremium}" th:if="${accountConfig.purchasePremium != null}"/>
+			<column name="default_purchase_premium_rate" th:valueNumeric="${accountConfig.defaultPurchasePremiumRate}" th:if="${accountConfig.defaultPurchasePremiumRate != null}"/>
+			<column name="default_max_apr" th:valueNumeric="${accountConfig.defaultMaxApr}" th:if="${accountConfig.defaultMaxApr != null}"/>
+			<column name="default_max_interest_rate" th:valueNumeric="${accountConfig.defaultMaxInterestRate}" th:if="${accountConfig.defaultMaxInterestRate != null}"/>
+			<column name="coupon_rate" th:valueNumeric="${accountConfig.couponRate}" th:if="${accountConfig.couponRate != null}"/>
+			<column name="auto_collection_pre120_fee" th:valueNumeric="${accountConfig.autoCollectionPre120Fee}" th:if="${accountConfig.autoCollectionPre120Fee != null}"/>
+			<column name="auto_collection_pre120_fee_max" th:valueNumeric="${accountConfig.autoCollectionPre120FeeMax}" th:if="${accountConfig.autoCollectionPre120FeeMax != null}"/>
+			<column name="auto_collection_post120_fee" th:valueNumeric="${accountConfig.autoCollectionPost120Fee}" th:if="${accountConfig.autoCollectionPost120Fee != null}"/>
+			<column name="auto_collection_post120_fee_max" th:valueNumeric="${accountConfig.autoCollectionPost120FeeMax}" th:if="${accountConfig.autoCollectionPost120FeeMax != null}"/>
+			<column name="auto_recovery_borrower_payment_fee" th:valueNumeric="${accountConfig.autoRecoveryBorrowerPaymentFee}" th:if="${accountConfig.autoRecoveryBorrowerPaymentFee != null}"/>
+			<column name="seasoning_max_days" th:valueNumeric="${accountConfig.seasoningMaxDays}" th:if="${accountConfig.seasoningMaxDays != null}"/>
+			<column name="purchase_days" th:valueNumeric="${accountConfig.purchaseDays}" th:if="${accountConfig.purchaseDays != null}"/>
+			<column name="minimum_purchase_seasoning_days" th:valueNumeric="${accountConfig.minimumPurchaseSeasoningDays}" th:if="${accountConfig.minimumPurchaseSeasoningDays != null}"/>
+			<column name="payment_seasoning_days" th:valueNumeric="${accountConfig.paymentSeasoningDays}" th:if="${accountConfig.paymentSeasoningDays != null}"/>
+			<column name="day_of_funding" th:valueNumeric="${accountConfig.dayOfFunding}" th:if="${accountConfig.dayOfFunding != null}"/>
+			<column name="net_suite_subsidiary_id" th:valueNumeric="${accountConfig.netSuiteSubsidiaryId}" th:if="${accountConfig.netSuiteSubsidiaryId != null}"/>
+			<column name="net_suite_class_id" th:valueNumeric="${accountConfig.netSuiteClassId}" th:if="${accountConfig.netSuiteClassId != null}"/>
+			<column name="debt_sale_clawback_period_days" th:valueNumeric="${accountConfig.debtSaleClawbackPeriodDays}" th:if="${accountConfig.debtSaleClawbackPeriodDays != null}"/>
+			<column name="charge_off_min_days" th:valueNumeric="${accountConfig.chargeOffMinDays}" th:if="${accountConfig.chargeOffMinDays != null}"/>
+			<column name="holding_days" th:valueNumeric="${accountConfig.holdingDays}" th:if="${accountConfig.holdingDays != null}"/>
+			<column name="previous_system_id" th:valueNumeric="${accountConfig.previousSystemId}" th:if="${accountConfig.previousSystemId != null}"/>
+			<column name="cash_report_daily" th:valueBoolean="${accountConfig.cashReportDaily}" th:if="${accountConfig.cashReportDaily != null}"/>
+			<column name="cash_report_weekly" th:valueBoolean="${accountConfig.cashReportWeekly}" th:if="${accountConfig.cashReportWeekly != null}"/>
+			<column name="cash_report_monthly" th:valueBoolean="${accountConfig.cashReportMonthly}" th:if="${accountConfig.cashReportMonthly != null}"/>
+			<column name="cash_report_quarterly" th:valueBoolean="${accountConfig.cashReportQuarterly}" th:if="${accountConfig.cashReportQuarterly != null}"/>
+			<column name="cash_report_yearly" th:valueBoolean="${accountConfig.cashReportYearly}" th:if="${accountConfig.cashReportYearly != null}"/>
+			<column name="legal_cost_eligible" th:valueBoolean="${accountConfig.legalCostEligible}" th:if="${accountConfig.legalCostEligible != null}"/>
+			<column name="debit_fees_automatically" th:valueBoolean="${accountConfig.debitFeesAutomatically}" th:if="${accountConfig.debitFeesAutomatically != null}"/>
+			<column name="hold_for_debt_sale_clawback_period" th:valueBoolean="${accountConfig.holdForDebtSaleClawbackPeriod}" th:if="${accountConfig.holdForDebtSaleClawbackPeriod != null}"/>
+			<column name="eligible_for_debt_sale" th:valueBoolean="${accountConfig.eligibleForDebtSale}" th:if="${accountConfig.eligibleForDebtSale != null}"/>
+			<column name="eligible_for_fraud_repurchase" th:valueBoolean="${accountConfig.eligibleForFraudRepurchase}" th:if="${accountConfig.eligibleForFraudRepurchase != null}"/>
+			<column name="eligible_for_outsource" th:valueBoolean="${accountConfig.eligibleForOutsource}" th:if="${accountConfig.eligibleForOutsource != null}"/>
+			<column name="disable_all_reports" th:valueBoolean="${accountConfig.disableAllReports}" th:if="${accountConfig.disableAllReports != null}"/>
+			<column name="cash_sweeps_require_reconciliation" th:valueBoolean="${accountConfig.cashSweepsRequireReconciliation}" th:if="${accountConfig.cashSweepsRequireReconciliation != null}"/>
+			<column name="is_just_in_time_funding" th:valueBoolean="${accountConfig.isJustInTimeFunding}" th:if="${accountConfig.isJustInTimeFunding != null}"/>
+			<column name="auto_purchase_enabled" th:valueBoolean="${accountConfig.autoPurchaseEnabled}" th:if="${accountConfig.autoPurchaseEnabled != null}"/>
+			<column name="auto_eligible_for_repossession_fees" th:valueBoolean="${accountConfig.autoEligibleForRepossessionFees}" th:if="${accountConfig.autoEligibleForRepossessionFees != null}"/>
+			<column name="auto_eligible_for_auction_fees" th:valueBoolean="${accountConfig.autoEligibleForAuctionFees}" th:if="${accountConfig.autoEligibleForAuctionFees != null}"/>
+			<column name="service_fee_calc_method" th:value="${accountConfig.serviceFeeCalcMethod}" th:if="${accountConfig.serviceFeeCalcMethod != null}"/>
+			<column name="portfolio_backup_servicer_name" th:value="${accountConfig.portfolioBackupServicerName}" th:if="${accountConfig.portfolioBackupServicerName != null}"/>
+			<column name="fee_treatment" th:value="${accountConfig.feeTreatment}" th:if="${accountConfig.feeTreatment != null}"/>
+			<column name="ach_id" th:value="${accountConfig.achId}" th:if="${accountConfig.achId != null}"/>
+			<column name="service_fee_escrow_start_date" th:value="${accountConfig.serviceFeeEscrowStartDate}" th:if="${accountConfig.serviceFeeEscrowStartDate != null}"/>
+			<column name="service_fee_escrow_end_date" th:value="${accountConfig.serviceFeeEscrowEndDate}" th:if="${accountConfig.serviceFeeEscrowEndDate != null}"/>
+			<column name="service_fee_last_update_date" th:value="${#temporals.format(accountConfig.serviceFeeLastUpdateDate, 'yyyy-MM-dd HH:mm:ss.SSS')}" th:if="${accountConfig.serviceFeeLastUpdateDate != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+		<rollback>
+			<delete tableName="account_config">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

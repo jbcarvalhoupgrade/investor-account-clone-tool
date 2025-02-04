@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM cash_sweep_config WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="cash_sweep_config" th:each="cashSweepConfig, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('cash_sweep_config_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${cashSweepConfig.investmentAccount.id}" th:if="${cashSweepConfig.investmentAccount.id != null}"/>
+			<column name="cash_sweeps_require_reconciliation" th:valueBoolean="${cashSweepConfig.cashSweepsRequireReconciliation}" th:if="${cashSweepConfig.cashSweepsRequireReconciliation != null}"/>
+			<column name="requires_servicing_account_segregation" th:valueBoolean="${cashSweepConfig.requiresServicingAccountSegregation}" th:if="${cashSweepConfig.requiresServicingAccountSegregation != null}"/>
+			<column name="automate_cash_sweeps" th:valueBoolean="${cashSweepConfig.automateCashSweeps}" th:if="${cashSweepConfig.automateCashSweeps != null}"/>
+			<column name="fee_treatment" th:value="${cashSweepConfig.feeTreatment}" th:if="${cashSweepConfig.feeTreatment != null}"/>
+			<column name="cash_sweep_cadence" th:value="${cashSweepConfig.cashSweepCadence}" th:if="${cashSweepConfig.cashSweepCadence != null}"/>
+			<column name="principal_bank_account" th:value="${cashSweepConfig.principalBankAccount}" th:if="${cashSweepConfig.principalBankAccount != null}"/>
+			<column name="interest_bank_account" th:value="${cashSweepConfig.interestBankAccount}" th:if="${cashSweepConfig.interestBankAccount != null}"/>
+			<column name="other_bank_account" th:value="${cashSweepConfig.otherBankAccount}" th:if="${cashSweepConfig.otherBankAccount != null}"/>
+			<column name="fees_bank_account" th:value="${cashSweepConfig.feesBankAccount}" th:if="${cashSweepConfig.feesBankAccount != null}"/>
+			<column name="distribution_percentage_cap" th:value="${cashSweepConfig.distributionPercentageCap}" th:if="${cashSweepConfig.distributionPercentageCap != null}"/>
+			<column name="automate_cash_sweeps_after_date" th:value="${cashSweepConfig.automateCashSweepsAfterDate}" th:if="${cashSweepConfig.automateCashSweepsAfterDate != null}"/>
+			<column name="first_distribution_date" th:value="${cashSweepConfig.firstDistributionDate}" th:if="${cashSweepConfig.firstDistributionDate != null}"/>
+		</insert>
+
+		<rollback>
+			<delete tableName="cash_sweep_config">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

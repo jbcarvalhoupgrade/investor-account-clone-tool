@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM purchase_price_config WHERE account_config_id in (SELECT id FROM account_config where investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccountId], ', ')} + '))'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="purchase_price_config" th:each="purchasePriceConfig, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('account_config_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="account_config_id" th:valueComputed="'SELECT id FROM account_config where investment_account_id = ' + ${purchasePriceConfig.investmentAccountId}" th:if="${purchasePriceConfig.investmentAccountId != null}"/>
+			<column name="program_definition_feature" th:value="${purchasePriceConfig.programDefinitionFeature}" th:if="${purchasePriceConfig.programDefinitionFeature != null}"/>
+			<column name="principal_type" th:value="${purchasePriceConfig.principalType}" th:if="${purchasePriceConfig.principalType != null}"/>
+			<column name="interest_type" th:value="${purchasePriceConfig.interestType}" th:if="${purchasePriceConfig.interestType != null}"/>
+			<column name="apr_rate" th:valueNumeric="${purchasePriceConfig.aprRate}" th:if="${purchasePriceConfig.aprRate != null}"/>
+			<column name="is_apr_include_sofr" th:valueBoolean="${purchasePriceConfig.isAprIncludeSofr}" th:if="${purchasePriceConfig.isAprIncludeSofr != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+		<rollback>
+			<delete tableName="purchase_price_config">
+				<where th:text="'account_config_id in (SELECT id FROM account_config where investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccountId], ', ')} + '))'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="cashSweepConfig, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: cash_sweep_config</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item">
+				<td>id</td>
+				<td>numeric</td>
+				<td>sequence_next_value('cash_sweep_config_seq)</td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.investmentAccount.id != null}">
+				<td data-th-text="investmentAccountId"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountId')}"></td>
+				<td data-th-text="${cashSweepConfig.investmentAccount.id}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.cashSweepsRequireReconciliation != null}">
+				<td data-th-text="cash_sweeps_require_reconciliation"></td>
+				<td data-th-text="${fieldTypes.get('cashSweepsRequireReconciliation')}"></td>
+				<td data-th-text="${cashSweepConfig.cashSweepsRequireReconciliation}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.requiresServicingAccountSegregation != null}">
+				<td data-th-text="requires_servicing_account_segregation"></td>
+				<td data-th-text="${fieldTypes.get('requiresServicingAccountSegregation')}"></td>
+				<td data-th-text="${cashSweepConfig.requiresServicingAccountSegregation}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.automateCashSweeps != null}">
+				<td data-th-text="automate_cash_sweeps"></td>
+				<td data-th-text="${fieldTypes.get('automateCashSweeps')}"></td>
+				<td data-th-text="${cashSweepConfig.automateCashSweeps}" ></td>
+			</tr>
+
+			<tr class="item" th:if="${cashSweepConfig.feeTreatment != null}">
+				<td data-th-text="fee_treatment"></td>
+				<td data-th-text="${fieldTypes.get('feeTreatment')}"></td>
+				<td data-th-text="${cashSweepConfig.feeTreatment}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.cashSweepCadence != null}">
+				<td data-th-text="cash_sweep_cadence"></td>
+				<td data-th-text="${fieldTypes.get('cashSweepCadence')}"></td>
+				<td data-th-text="${cashSweepConfig.cashSweepCadence}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.principalBankAccount != null}">
+				<td data-th-text="principal_bank_account"></td>
+				<td data-th-text="${fieldTypes.get('principalBankAccount')}"></td>
+				<td data-th-text="${cashSweepConfig.principalBankAccount}" ></td>
+			</tr>
+
+			<tr class="item" th:if="${cashSweepConfig.interestBankAccount != null}">
+				<td data-th-text="interest_bank_account"></td>
+				<td data-th-text="${fieldTypes.get('interestBankAccount')}"></td>
+				<td data-th-text="${cashSweepConfig.interestBankAccount}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.otherBankAccount != null}">
+				<td data-th-text="other_bank_account"></td>
+				<td data-th-text="${fieldTypes.get('otherBankAccount')}"></td>
+				<td data-th-text="${cashSweepConfig.otherBankAccount}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.feesBankAccount != null}">
+				<td data-th-text="fees_bank_account"></td>
+				<td data-th-text="${fieldTypes.get('feesBankAccount')}"></td>
+				<td data-th-text="${cashSweepConfig.feesBankAccount}" ></td>
+			</tr>
+
+			<tr class="item" th:if="${cashSweepConfig.distributionPercentageCap != null}">
+				<td data-th-text="distribution_percentage_cap"></td>
+				<td data-th-text="${fieldTypes.get('distributionPercentageCap')}"></td>
+				<td data-th-text="${cashSweepConfig.distributionPercentageCap}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.automateCashSweepsAfterDate != null}">
+				<td data-th-text="automate_cash_sweeps_after_date"></td>
+				<td data-th-text="${fieldTypes.get('automateCashSweepsAfterDate')}"></td>
+				<td data-th-text="${cashSweepConfig.automateCashSweepsAfterDate}" ></td>
+			</tr>
+			<tr class="item" th:if="${cashSweepConfig.firstDistributionDate != null}">
+				<td data-th-text="first_distribution_date"></td>
+				<td data-th-text="${fieldTypes.get('firstDistributionDate')}"></td>
+				<td data-th-text="${cashSweepConfig.firstDistributionDate}" ></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

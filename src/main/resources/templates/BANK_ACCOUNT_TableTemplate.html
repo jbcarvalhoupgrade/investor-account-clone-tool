@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="bankAccount, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: bank_account</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item">
+				<td>id</td>
+				<td>numeric</td>
+				<td>sequence_next_value('bank_account_seq)</td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+			<tr class="item" th:if="${bankAccount.investmentAccount.id != null}">
+				<td data-th-text="investment_account_id"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountId')}"></td>
+				<td data-th-text="${bankAccount.investmentAccount.id}" ></td>
+			</tr>
+			<tr class="item" th:if="${bankAccount.type != null}">
+				<td data-th-text="type"></td>
+				<td data-th-text="${fieldTypes.get('type')}"></td>
+				<td data-th-text="${bankAccount.type}" ></td>
+			</tr>
+			<tr class="item" th:if="${bankAccount.holderName != null}">
+				<td data-th-text="holder_name"></td>
+				<td data-th-text="${fieldTypes.get('holderName')}"></td>
+				<td data-th-text="${bankAccount.holderName}" ></td>
+			</tr>
+			<tr class="item" th:if="${bankAccount.descriptor != null}">
+				<td data-th-text="descriptor"></td>
+				<td data-th-text="${fieldTypes.get('descriptor')}"></td>
+				<td data-th-text="${bankAccount.descriptor}" ></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

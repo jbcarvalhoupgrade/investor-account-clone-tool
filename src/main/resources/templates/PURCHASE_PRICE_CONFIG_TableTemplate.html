@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="purchasePriceConfig, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: purchase_price_config</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item">
+				<td>id</td>
+				<td>numeric</td>
+				<td>sequence_next_value('purchase_price_config_seq)</td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.investmentAccountId != null}">
+				<td data-th-text="account_config_id"></td>
+				<td data-th-text="${fieldTypes.get('accountConfigId')}"></td>
+				<td th:text="'SELECT id FROM account_config where investment_account_id = ' + ${purchasePriceConfig.investmentAccountId}"></td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.programDefinitionFeature != null}">
+				<td data-th-text="program_definition_feature"></td>
+				<td data-th-text="${fieldTypes.get('programDefinitionFeature')}"></td>
+				<td data-th-text="${purchasePriceConfig.programDefinitionFeature}" ></td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.principalType != null}">
+				<td data-th-text="principal_type"></td>
+				<td data-th-text="${fieldTypes.get('principalType')}"></td>
+				<td data-th-text="${purchasePriceConfig.principalType}" ></td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.interestType != null}">
+				<td data-th-text="interest_type"></td>
+				<td data-th-text="${fieldTypes.get('interestType')}"></td>
+				<td data-th-text="${purchasePriceConfig.interestType}" ></td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.isAprIncludeSofr != null}">
+				<td data-th-text="account_confis_apr_include_sofrig_id"></td>
+				<td data-th-text="${fieldTypes.get('isAprIncludeSofr')}"></td>
+				<td data-th-text="${purchasePriceConfig.isAprIncludeSofr}" ></td>
+			</tr>
+			<tr class="item" th:if="${purchasePriceConfig.aprRate != null}">
+				<td data-th-text="apr_rate"></td>
+				<td data-th-text="${fieldTypes.get('aprRate')}"></td>
+				<td data-th-text="${purchasePriceConfig.aprRate}" ></td>
+			</tr>
+			<tr class="item">
+				<td data-th-text="actor_id"></td>
+				<td>text</td>
+				<td>liquibase</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

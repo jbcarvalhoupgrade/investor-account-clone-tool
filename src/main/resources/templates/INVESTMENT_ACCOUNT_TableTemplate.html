@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="investmentAccount, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: investment_account</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.id != null}">
+				<td data-th-text="id"></td>
+				<td data-th-text="${fieldTypes.get('id')}"></td>
+				<td data-th-text="${investmentAccount.id}" ></td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.institution.id != null}">
+				<td data-th-text="institution_id"></td>
+				<td data-th-text="${fieldTypes.get('institutionId')}"></td>
+				<td data-th-text="${investmentAccount.institution.id}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.name != null}">
+				<td data-th-text="name"></td>
+				<td data-th-text="${fieldTypes.get('name')}"></td>
+				<td data-th-text="${investmentAccount.name}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.shortName != null}">
+				<td data-th-text="short_name"></td>
+				<td data-th-text="${fieldTypes.get('shortName')}"></td>
+				<td data-th-text="${investmentAccount.shortName}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.status != null}">
+				<td data-th-text="status"></td>
+				<td data-th-text="${fieldTypes.get('status')}"></td>
+				<td data-th-text="${investmentAccount.status}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.type != null}">
+				<td data-th-text="type"></td>
+				<td data-th-text="${fieldTypes.get('type')}"></td>
+				<td data-th-text="${investmentAccount.type}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.productType != null}">
+				<td data-th-text="product_type"></td>
+				<td data-th-text="${fieldTypes.get('productType')}"></td>
+				<td data-th-text="${investmentAccount.productType}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.productSubType != null}">
+				<td data-th-text="product_sub_type"></td>
+				<td data-th-text="${fieldTypes.get('productSubType')}"></td>
+				<td data-th-text="${investmentAccount.productSubType}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isPassthrough != null}">
+				<td data-th-text="is_passthrough"></td>
+				<td data-th-text="${fieldTypes.get('isPassthrough')}"></td>
+				<td data-th-text="${investmentAccount.isPassthrough}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isWarehouse != null}">
+				<td data-th-text="is_warehouse"></td>
+				<td data-th-text="${fieldTypes.get('isWarehouse')}"></td>
+				<td data-th-text="${investmentAccount.isWarehouse}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isWholeloan != null}">
+				<td data-th-text="is_wholeloan"></td>
+				<td data-th-text="${fieldTypes.get('isWholeloan')}"></td>
+				<td data-th-text="${investmentAccount.isWholeloan}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isSendingWelcomeKit != null}">
+				<td data-th-text="is_sending_welcome_kit"></td>
+				<td data-th-text="${fieldTypes.get('isSendingWelcomeKit')}"></td>
+				<td data-th-text="${investmentAccount.isSendingWelcomeKit}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isAssetRestructuring != null}">
+				<td data-th-text="is_asset_restructuring"></td>
+				<td data-th-text="${fieldTypes.get('isAssetRestructuring')}"></td>
+				<td data-th-text="${investmentAccount.isAssetRestructuring}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.isSecuritization != null}">
+				<td data-th-text="is_securitization"></td>
+				<td data-th-text="${fieldTypes.get('isSecuritization')}"></td>
+				<td data-th-text="${investmentAccount.isSecuritization}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.financialInstitutionType != null}">
+				<td data-th-text="financial_institution_type"></td>
+				<td data-th-text="${fieldTypes.get('financialInstitutionType')}"></td>
+				<td data-th-text="${investmentAccount.financialInstitutionType}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.allocationPolicy != null}">
+				<td data-th-text="allocation_policy"></td>
+				<td data-th-text="${fieldTypes.get('allocationPolicy')}"></td>
+				<td data-th-text="${investmentAccount.allocationPolicy}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.buyerSubType != null}">
+				<td data-th-text="buyer_sub_type"></td>
+				<td data-th-text="${fieldTypes.get('buyerSubType')}"></td>
+				<td data-th-text="${investmentAccount.buyerSubType}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.extIntegrationName != null}">
+				<td data-th-text="ext_integration_name"></td>
+				<td data-th-text="${fieldTypes.get('extIntegrationName')}"></td>
+				<td data-th-text="${investmentAccount.extIntegrationName}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.extAccountNumber != null}">
+				<td data-th-text="ext_account_number"></td>
+				<td data-th-text="${fieldTypes.get('extAccountNumber')}"></td>
+				<td data-th-text="${investmentAccount.extAccountNumber}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.regionStatus != null}">
+				<td data-th-text="region_status"></td>
+				<td data-th-text="${fieldTypes.get('regionStatus')}"></td>
+				<td data-th-text="${investmentAccount.regionStatus}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.country != null}">
+				<td data-th-text="country"></td>
+				<td data-th-text="${fieldTypes.get('country')}"></td>
+				<td data-th-text="${investmentAccount.country}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.investorAssetClassName != null}">
+				<td data-th-text="investor_asset_class_name"></td>
+				<td data-th-text="${fieldTypes.get('investorAssetClassName')}"></td>
+				<td data-th-text="${investmentAccount.investorAssetClassName}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.allocationPercentage != null}">
+				<td data-th-text="'allocation_percentage ***Deprecated but not nullable'"></td>
+				<td data-th-text="${fieldTypes.get('allocationPercentage')}"></td>
+				<td data-th-text="${#numbers.formatDecimal(investmentAccount.allocationPercentage, 1, 12, 'POINT')}" ></td>
+			</tr>
+			<tr class="item" th:if="${investmentAccount.collateralRequiredPercentage != null}">
+				<td data-th-text="'collateral_required_percentage ***Deprecated but not nullable'"></td>
+				<td data-th-text="${fieldTypes.get('collateralRequiredPercentage')}"></td>
+				<td data-th-text="${#numbers.formatDecimal(investmentAccount.collateralRequiredPercentage, 1, 12, 'POINT')}" ></td>
+			</tr>
+			<tr class="item">
+				<td data-th-text="actor_id"></td>
+				<td>text</td>
+				<td>liquibase</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

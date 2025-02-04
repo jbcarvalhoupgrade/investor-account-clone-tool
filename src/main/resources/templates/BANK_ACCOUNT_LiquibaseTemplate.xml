@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM bank_account WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="bank_account" th:each="bankAccount, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('bank_account_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${bankAccount.investmentAccount.id}" th:if="${bankAccount.investmentAccount.id != null}"/>
+			<column name="type" th:value="${bankAccount.type}" th:if="${bankAccount.type != null}"/>
+			<column name="descriptor" th:value="${bankAccount.descriptor}" th:if="${bankAccount.descriptor != null}"/>
+			<column name="holder_name" th:value="${bankAccount.holderName}" th:if="${bankAccount.holderName != null}"/>
+		</insert>
+
+		<rollback>
+			<delete tableName="bank_account">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM memberization_requirements WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="memberization_requirements" th:each="memberizationRequirements, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('memberization_requirements_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${memberizationRequirements.investmentAccount.id}" th:if="${memberizationRequirements.investmentAccount.id != null}"/>
+			<column name="membership_required" th:valueBoolean="${memberizationRequirements.membershipRequired}" th:if="${memberizationRequirements.membershipRequired != null}"/>
+			<column name="membership_template_type" th:value="${memberizationRequirements.membershipTemplateType}" th:if="${memberizationRequirements.membershipTemplateType != null}"/>
+			<column name="form_type" th:value="${memberizationRequirements.formType}" th:if="${memberizationRequirements.formType != null}"/>
+			<column name="membership_form_fields" th:value="${memberizationRequirements.membershipFormFieldsAsString}" th:if="${memberizationRequirements.membershipFormFields != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+
+		<rollback>
+			<delete tableName="memberization_requirements">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

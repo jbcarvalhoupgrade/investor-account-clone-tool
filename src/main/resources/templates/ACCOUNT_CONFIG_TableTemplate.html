@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="accountConfig, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: account_config</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item">
+				<td>id</td>
+				<td>numeric</td>
+				<td>sequence_next_value('account_config_seq)</td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+
+			<tr class="item" th:if="${accountConfig.investmentAccount.id != null}">
+				<td data-th-text="investment_account_id"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountId')}"></td>
+				<td data-th-text="${accountConfig.investmentAccount.id}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.collection31to60Fee != null}">
+				<td data-th-text="collection31to60Fee"></td>
+				<td data-th-text="${fieldTypes.get('collection31to60Fee')}"></td>
+				<td data-th-text="${accountConfig.collection31to60Fee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.collection61to90Fee != null}">
+				<td data-th-text="collection61to90Fee"></td>
+				<td data-th-text="${fieldTypes.get('collection61to90Fee')}"></td>
+				<td data-th-text="${accountConfig.collection61to90Fee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.collection91to120Fee != null}">
+				<td data-th-text="collection91to120Fee"></td>
+				<td data-th-text="${fieldTypes.get('collection91to120Fee')}"></td>
+				<td data-th-text="${accountConfig.collection91to120Fee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.recoveryDebtSalesFee != null}">
+				<td data-th-text="recovery_debt_sales_fee"></td>
+				<td data-th-text="${fieldTypes.get('recoveryDebtSalesFee')}"></td>
+				<td data-th-text="${accountConfig.recoveryDebtSalesFee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.recoveryBorrowerPaymentFee != null}">
+				<td data-th-text="recovery_borrower_payment_fee"></td>
+				<td data-th-text="${fieldTypes.get('recoveryBorrowerPaymentFee')}"></td>
+				<td data-th-text="${accountConfig.recoveryBorrowerPaymentFee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.recoverySettlementsFee != null}">
+				<td data-th-text="recovery_settlements_fee"></td>
+				<td data-th-text="${fieldTypes.get('recoverySettlementsFee')}"></td>
+				<td data-th-text="${accountConfig.recoverySettlementsFee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.loanTrailingFee != null}">
+				<td data-th-text="loan_trailing_fee"></td>
+				<td data-th-text="${fieldTypes.get('loanTrailingFee')}"></td>
+				<td data-th-text="${accountConfig.loanTrailingFee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.seasoningMaxAmount != null}">
+				<td data-th-text="seasoning_max_amount"></td>
+				<td data-th-text="${fieldTypes.get('seasoningMaxAmount')}"></td>
+				<td data-th-text="${accountConfig.seasoningMaxAmount}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.defaultServiceFeeRate != null}">
+				<td data-th-text="default_service_fee_rate"></td>
+				<td data-th-text="${fieldTypes.get('defaultServiceFeeRate')}"></td>
+				<td data-th-text="${accountConfig.defaultServiceFeeRate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.serviceFeeEscrowRate != null}">
+				<td data-th-text="service_fee_escrow_rate"></td>
+				<td data-th-text="${fieldTypes.get('serviceFeeEscrowRate')}"></td>
+				<td data-th-text="${accountConfig.serviceFeeEscrowRate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.purchasePremium != null}">
+				<td data-th-text="purchase_premium"></td>
+				<td data-th-text="${fieldTypes.get('purchasePremium')}"></td>
+				<td data-th-text="${accountConfig.purchasePremium}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.defaultPurchasePremiumRate != null}">
+				<td data-th-text="default_purchase_premium_rate"></td>
+				<td data-th-text="${fieldTypes.get('defaultPurchasePremiumRate')}"></td>
+				<td data-th-text="${accountConfig.defaultPurchasePremiumRate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.defaultMaxApr != null}">
+				<td data-th-text="default_max_apr"></td>
+				<td data-th-text="${fieldTypes.get('defaultMaxApr')}"></td>
+				<td data-th-text="${accountConfig.defaultMaxApr}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.defaultMaxInterestRate != null}">
+				<td data-th-text="default_max_interest_rate"></td>
+				<td data-th-text="${fieldTypes.get('defaultMaxInterestRate')}"></td>
+				<td data-th-text="${accountConfig.defaultMaxInterestRate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.couponRate != null}">
+				<td data-th-text="coupon_rate"></td>
+				<td data-th-text="${fieldTypes.get('couponRate')}"></td>
+				<td data-th-text="${accountConfig.couponRate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoCollectionPre120Fee != null}">
+				<td data-th-text="auto_collection_pre120_fee"></td>
+				<td data-th-text="${fieldTypes.get('autoCollectionPre120Fee')}"></td>
+				<td data-th-text="${accountConfig.autoCollectionPre120Fee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoCollectionPre120FeeMax != null}">
+				<td data-th-text="auto_collection_pre120_fee_max"></td>
+				<td data-th-text="${fieldTypes.get('autoCollectionPre120FeeMax')}"></td>
+				<td data-th-text="${accountConfig.autoCollectionPre120FeeMax}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoCollectionPost120Fee != null}">
+				<td data-th-text="auto_collection_post120_fee"></td>
+				<td data-th-text="${fieldTypes.get('autoCollectionPost120Fee')}"></td>
+				<td data-th-text="${accountConfig.autoCollectionPost120Fee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoCollectionPost120FeeMax != null}">
+				<td data-th-text="auto_collection_post120_fee_max"></td>
+				<td data-th-text="${fieldTypes.get('autoCollectionPost120FeeMax')}"></td>
+				<td data-th-text="${accountConfig.autoCollectionPost120FeeMax}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoRecoveryBorrowerPaymentFee != null}">
+				<td data-th-text="auto_recovery_borrower_payment_fee"></td>
+				<td data-th-text="${fieldTypes.get('autoRecoveryBorrowerPaymentFee')}"></td>
+				<td data-th-text="${accountConfig.autoRecoveryBorrowerPaymentFee}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.seasoningMaxDays != null}">
+				<td data-th-text="seasoning_max_days"></td>
+				<td data-th-text="${fieldTypes.get('seasoningMaxDays')}"></td>
+				<td data-th-text="${accountConfig.seasoningMaxDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.purchaseDays != null}">
+				<td data-th-text="purchase_days"></td>
+				<td data-th-text="${fieldTypes.get('purchaseDays')}"></td>
+				<td data-th-text="${accountConfig.purchaseDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.minimumPurchaseSeasoningDays != null}">
+				<td data-th-text="minimum_purchase_seasoning_days"></td>
+				<td data-th-text="${fieldTypes.get('minimumPurchaseSeasoningDays')}"></td>
+				<td data-th-text="${accountConfig.minimumPurchaseSeasoningDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.paymentSeasoningDays != null}">
+				<td data-th-text="payment_seasoning_days"></td>
+				<td data-th-text="${fieldTypes.get('paymentSeasoningDays')}"></td>
+				<td data-th-text="${accountConfig.paymentSeasoningDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.dayOfFunding != null}">
+				<td data-th-text="day_of_funding"></td>
+				<td data-th-text="${fieldTypes.get('dayOfFunding')}"></td>
+				<td data-th-text="${accountConfig.dayOfFunding}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.netSuiteSubsidiaryId != null}">
+				<td data-th-text="net_suite_subsidiary_id"></td>
+				<td data-th-text="${fieldTypes.get('netSuiteSubsidiaryId')}"></td>
+				<td data-th-text="${accountConfig.netSuiteSubsidiaryId}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.netSuiteClassId != null}">
+				<td data-th-text="net_suite_class_id"></td>
+				<td data-th-text="${fieldTypes.get('netSuiteClassId')}"></td>
+				<td data-th-text="${accountConfig.netSuiteClassId}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.debtSaleClawbackPeriodDays != null}">
+				<td data-th-text="debt_sale_clawback_period_days"></td>
+				<td data-th-text="${fieldTypes.get('debtSaleClawbackPeriodDays')}"></td>
+				<td data-th-text="${accountConfig.debtSaleClawbackPeriodDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.chargeOffMinDays != null}">
+				<td data-th-text="charge_off_min_days"></td>
+				<td data-th-text="${fieldTypes.get('chargeOffMinDays')}"></td>
+				<td data-th-text="${accountConfig.chargeOffMinDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.holdingDays != null}">
+				<td data-th-text="holding_days"></td>
+				<td data-th-text="${fieldTypes.get('holdingDays')}"></td>
+				<td data-th-text="${accountConfig.holdingDays}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.previousSystemId != null}">
+				<td data-th-text="previous_system_id"></td>
+				<td data-th-text="${fieldTypes.get('previousSystemId')}"></td>
+				<td data-th-text="${accountConfig.previousSystemId}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashReportDaily != null}">
+				<td data-th-text="cash_report_daily"></td>
+				<td data-th-text="${fieldTypes.get('cashReportDaily')}"></td>
+				<td data-th-text="${accountConfig.cashReportDaily}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashReportWeekly != null}">
+				<td data-th-text="cash_report_weekly"></td>
+				<td data-th-text="${fieldTypes.get('cashReportWeekly')}"></td>
+				<td data-th-text="${accountConfig.cashReportWeekly}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashReportMonthly != null}">
+				<td data-th-text="cash_report_monthly"></td>
+				<td data-th-text="${fieldTypes.get('cashReportMonthly')}"></td>
+				<td data-th-text="${accountConfig.cashReportMonthly}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashReportQuarterly != null}">
+				<td data-th-text="cash_report_quarterly"></td>
+				<td data-th-text="${fieldTypes.get('cashReportQuarterly')}"></td>
+				<td data-th-text="${accountConfig.cashReportQuarterly}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashReportYearly != null}">
+				<td data-th-text="cash_report_yearly"></td>
+				<td data-th-text="${fieldTypes.get('cashReportYearly')}"></td>
+				<td data-th-text="${accountConfig.cashReportYearly}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.legalCostEligible != null}">
+				<td data-th-text="legal_cost_eligible"></td>
+				<td data-th-text="${fieldTypes.get('legalCostEligible')}"></td>
+				<td data-th-text="${accountConfig.legalCostEligible}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.debitFeesAutomatically != null}">
+				<td data-th-text="debit_fees_automatically"></td>
+				<td data-th-text="${fieldTypes.get('debitFeesAutomatically')}"></td>
+				<td data-th-text="${accountConfig.debitFeesAutomatically}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.holdForDebtSaleClawbackPeriod != null}">
+				<td data-th-text="hold_for_debt_sale_clawback_period"></td>
+				<td data-th-text="${fieldTypes.get('holdForDebtSaleClawbackPeriod')}"></td>
+				<td data-th-text="${accountConfig.holdForDebtSaleClawbackPeriod}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.eligibleForDebtSale != null}">
+				<td data-th-text="eligible_for_debt_sale"></td>
+				<td data-th-text="${fieldTypes.get('eligibleForDebtSale')}"></td>
+				<td data-th-text="${accountConfig.eligibleForDebtSale}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.eligibleForFraudRepurchase != null}">
+				<td data-th-text="eligible_for_fraud_repurchase"></td>
+				<td data-th-text="${fieldTypes.get('eligibleForFraudRepurchase')}"></td>
+				<td data-th-text="${accountConfig.eligibleForFraudRepurchase}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.eligibleForOutsource != null}">
+				<td data-th-text="eligible_for_outsource"></td>
+				<td data-th-text="${fieldTypes.get('eligibleForOutsource')}"></td>
+				<td data-th-text="${accountConfig.eligibleForOutsource}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.disableAllReports != null}">
+				<td data-th-text="disable_all_reports"></td>
+				<td data-th-text="${fieldTypes.get('disableAllReports')}"></td>
+				<td data-th-text="${accountConfig.disableAllReports}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.cashSweepsRequireReconciliation != null}">
+				<td data-th-text="cash_sweeps_require_reconciliation"></td>
+				<td data-th-text="${fieldTypes.get('cashSweepsRequireReconciliation')}"></td>
+				<td data-th-text="${accountConfig.cashSweepsRequireReconciliation}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.isJustInTimeFunding != null}">
+				<td data-th-text="is_just_in_time_funding"></td>
+				<td data-th-text="${fieldTypes.get('isJustInTimeFunding')}"></td>
+				<td data-th-text="${accountConfig.isJustInTimeFunding}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoPurchaseEnabled != null}">
+				<td data-th-text="auto_purchase_enabled"></td>
+				<td data-th-text="${fieldTypes.get('autoPurchaseEnabled')}"></td>
+				<td data-th-text="${accountConfig.autoPurchaseEnabled}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoEligibleForRepossessionFees != null}">
+				<td data-th-text="auto_eligible_for_repossession_fees"></td>
+				<td data-th-text="${fieldTypes.get('autoEligibleForRepossessionFees')}"></td>
+				<td data-th-text="${accountConfig.autoEligibleForRepossessionFees}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.autoEligibleForAuctionFees != null}">
+				<td data-th-text="auto_eligible_for_auction_fees"></td>
+				<td data-th-text="${fieldTypes.get('autoEligibleForAuctionFees')}"></td>
+				<td data-th-text="${accountConfig.autoEligibleForAuctionFees}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.serviceFeeCalcMethod != null}">
+				<td data-th-text="service_fee_calc_method"></td>
+				<td data-th-text="${fieldTypes.get('serviceFeeCalcMethod')}"></td>
+				<td data-th-text="${accountConfig.serviceFeeCalcMethod}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.portfolioBackupServicerName != null}">
+				<td data-th-text="portfolio_backup_servicer_name"></td>
+				<td data-th-text="${fieldTypes.get('portfolioBackupServicerName')}"></td>
+				<td data-th-text="${accountConfig.portfolioBackupServicerName}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.feeTreatment != null}">
+				<td data-th-text="fee_treatment"></td>
+				<td data-th-text="${fieldTypes.get('feeTreatment')}"></td>
+				<td data-th-text="${accountConfig.feeTreatment}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.achId != null}">
+				<td data-th-text="ach_id"></td>
+				<td data-th-text="${fieldTypes.get('achId')}"></td>
+				<td data-th-text="${accountConfig.achId}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.serviceFeeEscrowStartDate != null}">
+				<td data-th-text="service_fee_escrow_start_date"></td>
+				<td data-th-text="${fieldTypes.get('serviceFeeEscrowStartDate')}"></td>
+				<td data-th-text="${accountConfig.serviceFeeEscrowStartDate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.serviceFeeEscrowEndDate != null}">
+				<td data-th-text="service_fee_escrow_end_date"></td>
+				<td data-th-text="${fieldTypes.get('serviceFeeEscrowEndDate')}"></td>
+				<td data-th-text="${accountConfig.serviceFeeEscrowEndDate}" ></td>
+			</tr>
+			<tr class="item" th:if="${accountConfig.serviceFeeLastUpdateDate != null}">
+				<td data-th-text="service_fee_last_update_date"></td>
+				<td data-th-text="${fieldTypes.get('serviceFeeLastUpdateDate')}"></td>
+				<td data-th-text="${#temporals.format(accountConfig.serviceFeeLastUpdateDate, 'yyyy-MM-dd HH:mm:ss.SSS')}" ></td>
+			</tr>
+			<tr class="item">
+				<td data-th-text="actor_id"></td>
+				<td>text</td>
+				<td>liquibase</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

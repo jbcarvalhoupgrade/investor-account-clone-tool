@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM allocation_config WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="allocation_config" th:each="allocationConfig, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('allocation_config_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${allocationConfig.investmentAccount.id}" th:if="${allocationConfig.investmentAccount.id != null}"/>
+			<column name="is_allocation_enabled" th:valueBoolean="${allocationConfig.isAllocationEnabled}" th:if="${allocationConfig.isAllocationEnabled != null}"/>
+			<column name="is_competition_pool_enabled" th:valueBoolean="${allocationConfig.isCompetitionPoolEnabled}" th:if="${allocationConfig.isCompetitionPoolEnabled != null}"/>
+			<column name="is_beneficiary_allocation_enabled" th:valueBoolean="${allocationConfig.isBeneficiaryAllocationEnabled}" th:if="${allocationConfig.isBeneficiaryAllocationEnabled != null}"/>
+			<column name="is_keep_current_allocation_enabled" th:valueBoolean="${allocationConfig.isKeepCurrentAllocationEnabled}" th:if="${allocationConfig.isKeepCurrentAllocationEnabled != null}"/>
+			<column name="eligible_for_pre_allocation_on_ready_for_issue_or_open" th:valueBoolean="${allocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen}" th:if="${allocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen != null}"/>
+			<column name="priority" th:valueNumeric="${allocationConfig.priority}" th:if="${allocationConfig.priority != null}"/>
+			<column name="weight" th:valueNumeric="${allocationConfig.weight}" th:if="${allocationConfig.weight != null}"/>
+			<column name="issuing_bank_id" th:valueNumeric="${allocationConfig.issuingBank.id}" th:if="${allocationConfig.issuingBank != null}"/>
+			<column name="default_seasoner_account" th:valueNumeric="${allocationConfig.defaultSeasonerAccount.id}" th:if="${allocationConfig.defaultSeasonerAccount != null}"/>
+			<column name="monthly_target_pct" th:valueNumeric="${allocationConfig.monthlyTargetPct}" th:if="${allocationConfig.monthlyTargetPct != null}"/>
+			<column name="expected_application_fallout_pct" th:valueNumeric="${allocationConfig.expectedApplicationFalloutPct}" th:if="${allocationConfig.expectedApplicationFalloutPct != null}"/>
+			<column name="portfolio_mix_target_amount" th:valueNumeric="${allocationConfig.portfolioMixTargetAmount}" th:if="${allocationConfig.portfolioMixTargetAmount != null}"/>
+			<column name="monthly_dollar_cap_amount" th:valueNumeric="${allocationConfig.monthlyDollarCapAmount}" th:if="${allocationConfig.monthlyDollarCapAmount != null}"/>
+			<column name="monthly_target_dollar_amount" th:valueNumeric="${allocationConfig.monthlyTargetDollarAmount}" th:if="${allocationConfig.monthlyTargetDollarAmount != null}"/>
+			<column name="projected_allocation_enable_date" th:value="${allocationConfig.projectedAllocationEnableDate}" th:if="${allocationConfig.projectedAllocationEnableDate != null}"/>
+			<column name="allocation_disable_notes" th:value="${allocationConfig.allocationDisableNotes}" th:if="${allocationConfig.allocationDisableNotes != null}"/>
+			<column name="allocation_disable_reason" th:value="${allocationConfig.allocationDisableReason}" th:if="${allocationConfig.allocationDisableReason != null}"/>
+			<column name="second_brand" th:value="${allocationConfig.secondBrand}" th:if="${allocationConfig.secondBrand != null}"/>
+			<column name="asset_type" th:value="${allocationConfig.assetType}" th:if="${allocationConfig.assetType != null}"/>
+			<column name="credit_sources" th:value="${allocationConfig.creditSourcesAsString}" th:if="${allocationConfig.creditSources != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+		<rollback>
+			<delete tableName="allocation_config">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccount.id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

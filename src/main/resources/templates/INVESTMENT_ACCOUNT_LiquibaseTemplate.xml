@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM investment_account WHERE id in (' + ${#strings.listJoin(inputValues.![id], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="investment_account" th:each="investmentAccount, iteration : ${inputValues}">
+			<column name="id" th:valueNumeric="${investmentAccount.id}" th:if="${investmentAccount.id != null}"/>
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="institution_id" th:valueNumeric="${investmentAccount.institution.id}" th:if="${investmentAccount.institution.id != null}"/>
+			<column name="name" th:value="${investmentAccount.name}" th:if="${investmentAccount.name != null}"/>
+			<column name="short_name" th:value="${investmentAccount.shortName}" th:if="${investmentAccount.shortName != null}"/>
+			<column name="status" th:value="${investmentAccount.status}" th:if="${investmentAccount.status != null}"/>
+			<column name="type" th:value="${investmentAccount.type}" th:if="${investmentAccount.type != null}"/>
+			<column name="product_type" th:value="${investmentAccount.productType}" th:if="${investmentAccount.productType != null}"/>
+			<column name="product_sub_type" th:value="${investmentAccount.productSubType}" th:if="${investmentAccount.productSubType != null}"/>
+			<column name="is_passthrough" th:valueBoolean="${investmentAccount.isPassthrough}" th:if="${investmentAccount.isPassthrough != null}"/>
+			<column name="is_warehouse" th:valueBoolean="${investmentAccount.isWarehouse}" th:if="${investmentAccount.isWarehouse != null}"/>
+			<column name="is_wholeloan" th:valueBoolean="${investmentAccount.isWholeloan}" th:if="${investmentAccount.isWholeloan != null}"/>
+			<column name="is_sending_welcome_kit" th:valueBoolean="${investmentAccount.isSendingWelcomeKit}" th:if="${investmentAccount.isSendingWelcomeKit != null}"/>
+			<column name="is_asset_restructuring" th:valueBoolean="${investmentAccount.isAssetRestructuring}" th:if="${investmentAccount.isAssetRestructuring != null}"/>
+			<column name="is_securitization" th:valueBoolean="${investmentAccount.isSecuritization}" th:if="${investmentAccount.isSecuritization != null}"/>
+			<column name="financial_institution_type" th:value="${investmentAccount.financialInstitutionType}" th:if="${investmentAccount.financialInstitutionType != null}"/>
+			<column name="allocation_policy" th:value="${investmentAccount.allocationPolicy}" th:if="${investmentAccount.allocationPolicy != null}"/>
+			<column name="buyer_sub_type" th:value="${investmentAccount.buyerSubType}" th:if="${investmentAccount.buyerSubType != null}"/>
+			<column name="ext_integration_name" th:value="${investmentAccount.extIntegrationName}" th:if="${investmentAccount.extIntegrationName != null}"/>
+			<column name="ext_account_number" th:value="${investmentAccount.extAccountNumber}" th:if="${investmentAccount.extAccountNumber != null}"/>
+			<column name="region_status" th:value="${investmentAccount.regionStatus}" th:if="${investmentAccount.regionStatus != null}"/>
+			<column name="country" th:value="${investmentAccount.country}" th:if="${investmentAccount.country != null}"/>
+			<column name="investor_asset_class_name" th:value="${investmentAccount.investorAssetClassName}" th:if="${investmentAccount.investorAssetClassName != null}"/>
+			<column name="allocation_percentage" th:valueNumeric="${#numbers.formatDecimal(investmentAccount.allocationPercentage, 1, 12, 'POINT')}" th:if="${investmentAccount.allocationPercentage != null}"/>
+			<column name="collateral_required_percentage" th:valueNumeric="${#numbers.formatDecimal(investmentAccount.collateralRequiredPercentage, 1, 12, 'POINT')}" th:if="${investmentAccount.collateralRequiredPercentage != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+
+		<rollback>
+			<delete tableName="investment_account">
+				<where th:text="'id in (' + ${#strings.listJoin(inputValues.![id], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>
