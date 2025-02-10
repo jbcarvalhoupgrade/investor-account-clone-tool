@@ -11,7 +11,7 @@
 		</preConditions>
 
 		<insert tableName="purchase_price_config" th:each="purchasePriceConfig, iteration : ${inputValues}">
-			<column name="id" valueComputed="(select sequence_next_value('account_config_seq'))" />
+			<column name="id" valueComputed="(select sequence_next_value('purchase_price_config_seq'))" />
 			<column name="create_date" valueComputed="current_timestamp" />
 			<column name="update_date" valueComputed="current_timestamp" />
 			<column name="version" valueNumeric="0" />
