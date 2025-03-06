@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog logicalFilePath="changelog/TICKET_DESCRIPTION.changelog.xml"
+				   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="CHANGE_ME" id="TICKET_ID-TICKET_DESCRIPTION">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0" th:text="'SELECT count(*) FROM pre_allocation_config WHERE investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccountId], ', ')} + ')'"></sqlCheck>
+		</preConditions>
+
+		<insert tableName="pre_allocation_config" th:each="preAllocationConfig, iteration : ${inputValues}">
+			<column name="id" valueComputed="(select sequence_next_value('pre_allocation_config_seq'))" />
+			<column name="create_date" valueComputed="current_timestamp" />
+			<column name="update_date" valueComputed="current_timestamp" />
+			<column name="version" valueNumeric="0" />
+			<column name="investment_account_id" th:valueNumeric="${preAllocationConfig.investmentAccountId}" th:if="${preAllocationConfig.investmentAccountId != null}"/>
+			<column name="institution_id" th:valueNumeric="${preAllocationConfig.institutionId}" th:if="${preAllocationConfig.institutionId != null}"/>
+			<column name="issuing_bank_id" th:valueNumeric="${preAllocationConfig.issuingBankId}" th:if="${preAllocationConfig.issuingBankId != null}"/>
+			<column name="priority" th:valueNumeric="${preAllocationConfig.priority}" th:if="${preAllocationConfig.priority != null}"/>
+			<column name="weight" th:valueNumeric="${preAllocationConfig.weight}" th:if="${preAllocationConfig.weight != null}"/>
+			<column name="projected_allocation_enable_date" th:value="${preAllocationConfig.projectedAllocationEnableDate}" th:if="${preAllocationConfig.projectedAllocationEnableDate != null}"/>
+			<column name="is_allocation_enabled" th:valueBoolean="${preAllocationConfig.isAllocationEnabled}" th:if="${preAllocationConfig.isAllocationEnabled != null}"/>
+			<column name="is_competition_pool_enabled" th:valueBoolean="${preAllocationConfig.isCompetitionPoolEnabled}" th:if="${preAllocationConfig.isCompetitionPoolEnabled != null}"/>
+			<column name="is_keep_current_allocation_enabled" th:valueBoolean="${preAllocationConfig.isKeepCurrentAllocationEnabled}" th:if="${preAllocationConfig.isKeepCurrentAllocationEnabled != null}"/>
+			<column name="eligible_for_pre_allocation_on_ready_for_issue_or_open" th:valueBoolean="${preAllocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen}" th:if="${preAllocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen != null}"/>
+			<column name="pass_applicant_personal_information_enabled" th:valueBoolean="${preAllocationConfig.passApplicantPersonalInformationEnabled}" th:if="${preAllocationConfig.passApplicantPersonalInformationEnabled != null}"/>
+			<column name="asset_type" th:value="${preAllocationConfig.assetType}" th:if="${preAllocationConfig.assetType != null}"/>
+			<column name="product_type" th:value="${preAllocationConfig.productType}" th:if="${preAllocationConfig.productType != null}"/>
+			<column name="product_sub_type" th:value="${preAllocationConfig.productSubType}" th:if="${preAllocationConfig.productSubType != null}"/>
+			<column name="investment_account_type" th:value="${preAllocationConfig.investmentAccountType}" th:if="${preAllocationConfig.investmentAccountType != null}"/>
+			<column name="allocation_policy" th:value="${preAllocationConfig.allocationPolicy}" th:if="${preAllocationConfig.allocationPolicy != null}"/>
+			<column name="allocation_disable_reason" th:value="${preAllocationConfig.allocationDisableReason}" th:if="${preAllocationConfig.allocationDisableReason != null}"/>
+			<column name="region_status" th:value="${preAllocationConfig.regionStatus}" th:if="${preAllocationConfig.regionStatus != null}"/>
+			<column name="investment_account_ext_integration_name" th:value="${preAllocationConfig.investmentAccountExtIntegrationName}" th:if="${preAllocationConfig.investmentAccountExtIntegrationName != null}"/>
+			<column name="investment_account_ext_account_number" th:value="${preAllocationConfig.investmentAccountExtAccountNumber}" th:if="${preAllocationConfig.investmentAccountExtAccountNumber != null}"/>
+			<column name="allocation_disable_notes" th:value="${preAllocationConfig.allocationDisableNotes}" th:if="${preAllocationConfig.allocationDisableNotes != null}"/>
+			<column name="second_brand" th:value="${preAllocationConfig.secondBrand}" th:if="${preAllocationConfig.secondBrand != null}"/>
+			<column name="credit_sources" th:value="${preAllocationConfig.creditSources}" th:if="${preAllocationConfig.creditSources != null}"/>
+			<column name="actor_id" th:value="liquibase"/>
+		</insert>
+		<rollback>
+			<delete tableName="pre_allocation_config">
+				<where th:text="'investment_account_id in (' + ${#strings.listJoin(inputValues.![investmentAccountId], ', ')} + ')'"/>
+			</delete>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.credify.investor.act;
 
+import com.credify.investor.act.processors.PreAllocationConfigProcessor;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -11,13 +12,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.credify.investor.act.domain.FileSet;
 import com.credify.investor.act.domain.FileType;
-import com.credify.investor.act.processors.AccountConfigBasedProcessor;
-import com.credify.investor.act.processors.AllocationConfigBasedProcessor;
-import com.credify.investor.act.processors.BankAccountBasedProcessor;
-import com.credify.investor.act.processors.CashSweepConfigBasedProcessor;
+import com.credify.investor.act.processors.AccountConfigProcessor;
+import com.credify.investor.act.processors.AllocationConfigProcessor;
+import com.credify.investor.act.processors.BankAccountProcessor;
+import com.credify.investor.act.processors.CashSweepConfigProcessor;
 import com.credify.investor.act.processors.InvestmentAccountProcessor;
-import com.credify.investor.act.processors.MemberizationRequirementsBasedProcessor;
-import com.credify.investor.act.processors.PurchasePriceConfigBasedProcessor;
+import com.credify.investor.act.processors.MemberizationRequirementsProcessor;
+import com.credify.investor.act.processors.PurchasePriceConfigProcessor;
 import com.credify.investor.act.serializer.OffsetDateTimeDeserializer;
 import com.credify.investor.act.serializer.OffsetDateTimeSerializer;
 
@@ -45,17 +46,19 @@ public class Main {
                     FileType.CASH_SWEEP_CONFIG, FileSet.builder().dataFile("cashSweepConfig.json").replaceFile("cashSweepConfigReplaceValues.json").build(),
                     FileType.ALLOCATION_CONFIG, FileSet.builder().dataFile("allocationConfig.json").replaceFile("allocationConfigReplaceValues.json").build(),
                     FileType.ACCOUNT_CONFIG, FileSet.builder().dataFile("accountConfig.json").replaceFile("accountConfigReplaceValues.json").build(),
-                    FileType.PURCHASE_PRICE_CONFIG, FileSet.builder().dataFile("purchasePriceConfig.json").replaceFile("purchasePriceConfigReplaceValues.json").build()
+                    FileType.PURCHASE_PRICE_CONFIG, FileSet.builder().dataFile("purchasePriceConfig.json").replaceFile("purchasePriceConfigReplaceValues.json").build(),
+                    FileType.PRE_ALLOCATION_CONFIG, FileSet.builder().dataFile("preAllocationConfig.json").replaceFile("preAllocationConfigReplaceValues.json").build()
             );
 
     public static void main(String[] args) {
             InvestmentAccountProcessor investmentAccountProcessor = new InvestmentAccountProcessor();
-            BankAccountBasedProcessor bankAccountProcessor = new BankAccountBasedProcessor();
-            MemberizationRequirementsBasedProcessor memberizationRequirementsProcessor = new MemberizationRequirementsBasedProcessor();
-            CashSweepConfigBasedProcessor cashSweepConfigProcessor = new CashSweepConfigBasedProcessor();
-            AllocationConfigBasedProcessor allocationConfigProcessor = new AllocationConfigBasedProcessor();
-            AccountConfigBasedProcessor accountConfigProcessor = new AccountConfigBasedProcessor();
-            PurchasePriceConfigBasedProcessor purchasePriceConfigProcessor = new PurchasePriceConfigBasedProcessor();
+            BankAccountProcessor bankAccountProcessor = new BankAccountProcessor();
+            MemberizationRequirementsProcessor memberizationRequirementsProcessor = new MemberizationRequirementsProcessor();
+            CashSweepConfigProcessor cashSweepConfigProcessor = new CashSweepConfigProcessor();
+            AllocationConfigProcessor allocationConfigProcessor = new AllocationConfigProcessor();
+            AccountConfigProcessor accountConfigProcessor = new AccountConfigProcessor();
+            PurchasePriceConfigProcessor purchasePriceConfigProcessor = new PurchasePriceConfigProcessor();
+            PreAllocationConfigProcessor preAllocationConfigProcessor = new PreAllocationConfigProcessor();
 
             validateParameters(args);
 
@@ -95,6 +98,7 @@ public class Main {
                                 case ALLOCATION_CONFIG -> allocationConfigProcessor.process(contentFile, replaceValuesFile, objectMapper, rootPathFiles);
                                 case ACCOUNT_CONFIG -> accountConfigProcessor.process(contentFile, replaceValuesFile, objectMapper, rootPathFiles);
                                 case PURCHASE_PRICE_CONFIG -> purchasePriceConfigProcessor.process(contentFile, replaceValuesFile, objectMapper, rootPathFiles);
+                                case PRE_ALLOCATION_CONFIG -> preAllocationConfigProcessor.process(contentFile, replaceValuesFile, objectMapper, rootPathFiles);
                             }
 
                         } catch (IOException e) {

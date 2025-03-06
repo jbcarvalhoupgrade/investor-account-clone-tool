@@ -14,7 +14,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CashSweepConfigBasedProcessor extends FileInvestmentAccountBasedProcessor<CustomCashSweepConfig> {
+public class CashSweepConfigProcessor extends FileInvestmentAccountBasedProcessor<CustomCashSweepConfig> {
 
     @Override
     public CustomCashSweepConfig clone(CustomCashSweepConfig input, FileReplaceInvestmentAccountBasedValues replaceValues) {

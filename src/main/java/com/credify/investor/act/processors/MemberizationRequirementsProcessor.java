@@ -14,7 +14,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MemberizationRequirementsBasedProcessor extends FileInvestmentAccountBasedProcessor<CustomMemberizationRequirements> {
+public class MemberizationRequirementsProcessor extends FileInvestmentAccountBasedProcessor<CustomMemberizationRequirements> {
 
     @Override
     public CustomMemberizationRequirements clone(CustomMemberizationRequirements input, FileReplaceInvestmentAccountBasedValues replaceValues) {

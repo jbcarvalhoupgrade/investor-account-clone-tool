@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Account generation</title>
+
+	<style>
+		.table-box {
+			max-width: 800px;
+			margin: auto;
+			padding: 30px;
+			border: 1px solid #eee;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: #555;
+		}
+
+		.table-box table {
+			width: 100%;
+		}
+
+		.table-box table td {
+			padding: 5px;
+			vertical-align: top;
+		}
+
+
+		.table-box table tr.top table td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.top table td.title {
+			font-size: 45px;
+			line-height: 45px;
+			color: #333;
+		}
+
+		.table-box table tr.information table td {
+			padding-bottom: 40px;
+		}
+
+		.table-box table tr.heading td {
+			background: #eee;
+			border: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.table-box table tr.details td {
+			padding-bottom: 20px;
+		}
+
+		.table-box table tr.item td {
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="table-box" data-th-each="preAllocationConfig, iteration : ${inputValues}">
+		<table>
+			<tr class="heading">
+				<td colspan="3">Table: pre_allocation_config</td>
+			</tr>
+			<tr class="heading">
+				<td>Field</td>
+				<td>Type</td>
+				<td>Value</td>
+			</tr>
+			<tr class="item">
+				<td>id</td>
+				<td>numeric</td>
+				<td>sequence_next_value('pre_allocation_config_seq)</td>
+			</tr>
+			<tr class="item">
+				<td>create_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>update_date</td>
+				<td>timestamp PST</td>
+				<td>current_timestamp</td>
+			</tr>
+			<tr class="item">
+				<td>version</td>
+				<td>numeric</td>
+				<td>0</td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.investmentAccountId != null}">
+				<td data-th-text="investment_account_id"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountId')}"></td>
+				<td data-th-text="${preAllocationConfig.investmentAccountId}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.institutionId != null}">
+				<td data-th-text="institution_id"></td>
+				<td data-th-text="${fieldTypes.get('institutionId')}"></td>
+				<td data-th-text="${preAllocationConfig.institutionId}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.issuingBankId != null}">
+				<td data-th-text="issuing_bank_id"></td>
+				<td data-th-text="${fieldTypes.get('issuingBankId')}"></td>
+				<td data-th-text="${preAllocationConfig.issuingBankId}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.priority != null}">
+				<td data-th-text="priority"></td>
+				<td data-th-text="${fieldTypes.get('priority')}"></td>
+				<td data-th-text="${preAllocationConfig.priority}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.weight != null}">
+				<td data-th-text="weight"></td>
+				<td data-th-text="${fieldTypes.get('weight')}"></td>
+				<td data-th-text="${preAllocationConfig.weight}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.projectedAllocationEnableDate != null}">
+				<td data-th-text="projectedAllocationEnableDate"></td>
+				<td data-th-text="${fieldTypes.get('projectedAllocationEnableDate')}"></td>
+				<td data-th-text="${preAllocationConfig.projectedAllocationEnableDate}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.isAllocationEnabled != null}">
+				<td data-th-text="is_allocation_enabled"></td>
+				<td data-th-text="${fieldTypes.get('isAllocationEnabled')}"></td>
+				<td data-th-text="${preAllocationConfig.isAllocationEnabled}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.isCompetitionPoolEnabled != null}">
+				<td data-th-text="is_competition_pool_enabled"></td>
+				<td data-th-text="${fieldTypes.get('isCompetitionPoolEnabled')}"></td>
+				<td data-th-text="${preAllocationConfig.isCompetitionPoolEnabled}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.isKeepCurrentAllocationEnabled != null}">
+				<td data-th-text="is_keep_current_allocation_enabled"></td>
+				<td data-th-text="${fieldTypes.get('isKeepCurrentAllocationEnabled')}"></td>
+				<td data-th-text="${preAllocationConfig.isKeepCurrentAllocationEnabled}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen != null}">
+				<td data-th-text="eligible_for_pre_allocation_on_ready_for_issue_or_open"></td>
+				<td data-th-text="${fieldTypes.get('eligibleForPreAllocationOnReadyForIssueOrOpen')}"></td>
+				<td data-th-text="${preAllocationConfig.eligibleForPreAllocationOnReadyForIssueOrOpen}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.passApplicantPersonalInformationEnabled != null}">
+				<td data-th-text="pass_applicant_personal_information_enabled"></td>
+				<td data-th-text="${fieldTypes.get('passApplicantPersonalInformationEnabled')}"></td>
+				<td data-th-text="${preAllocationConfig.passApplicantPersonalInformationEnabled}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.assetType != null}">
+				<td data-th-text="asset_type"></td>
+				<td data-th-text="${fieldTypes.get('assetType')}"></td>
+				<td data-th-text="${preAllocationConfig.assetType}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.productType != null}">
+				<td data-th-text="product_type"></td>
+				<td data-th-text="${fieldTypes.get('productType')}"></td>
+				<td data-th-text="${preAllocationConfig.productType}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.productSubType != null}">
+				<td data-th-text="product_sub_type"></td>
+				<td data-th-text="${fieldTypes.get('productSubType')}"></td>
+				<td data-th-text="${preAllocationConfig.productSubType}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.investmentAccountType != null}">
+				<td data-th-text="investment_account_type"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountType')}"></td>
+				<td data-th-text="${preAllocationConfig.investmentAccountType}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.allocationPolicy != null}">
+				<td data-th-text="allocation_policy"></td>
+				<td data-th-text="${fieldTypes.get('allocationPolicy')}"></td>
+				<td data-th-text="${preAllocationConfig.allocationPolicy}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.allocationDisableReason != null}">
+				<td data-th-text="allocation_disable_reason"></td>
+				<td data-th-text="${fieldTypes.get('allocationDisableReason')}"></td>
+				<td data-th-text="${preAllocationConfig.allocationDisableReason}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.regionStatus != null}">
+				<td data-th-text="region_status"></td>
+				<td data-th-text="${fieldTypes.get('regionStatus')}"></td>
+				<td data-th-text="${preAllocationConfig.regionStatus}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.investmentAccountExtIntegrationName != null}">
+				<td data-th-text="investment_account_ext_integration_name"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountExtIntegrationName')}"></td>
+				<td data-th-text="${preAllocationConfig.investmentAccountExtIntegrationName}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.investmentAccountExtAccountNumber != null}">
+				<td data-th-text="investment_account_ext_account_number"></td>
+				<td data-th-text="${fieldTypes.get('investmentAccountExtAccountNumber')}"></td>
+				<td data-th-text="${preAllocationConfig.investmentAccountExtAccountNumber}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.allocationDisableNotes != null}">
+				<td data-th-text="allocation_disable_notes"></td>
+				<td data-th-text="${fieldTypes.get('allocationDisableNotes')}"></td>
+				<td data-th-text="${preAllocationConfig.allocationDisableNotes}" ></td>
+			</tr>
+			<tr class="item" th:if="${preAllocationConfig.secondBrand != null}">
+				<td data-th-text="second_brand"></td>
+				<td data-th-text="${fieldTypes.get('secondBrand')}"></td>
+				<td data-th-text="${preAllocationConfig.secondBrand}" ></td>
+			</tr>
+			<tr class="item">
+				<td data-th-text="actor_id"></td>
+				<td>text</td>
+				<td>liquibase</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

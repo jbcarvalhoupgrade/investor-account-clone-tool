@@ -14,7 +14,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AccountConfigBasedProcessor extends FileInvestmentAccountBasedProcessor<CustomAccountConfig> {
+public class AccountConfigProcessor extends FileInvestmentAccountBasedProcessor<CustomAccountConfig> {
 
     @Override
     public CustomAccountConfig clone(CustomAccountConfig input, FileReplaceInvestmentAccountBasedValues replaceValues) {

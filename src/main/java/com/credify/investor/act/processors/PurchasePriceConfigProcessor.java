@@ -14,7 +14,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class PurchasePriceConfigBasedProcessor extends FileInvestmentAccountBasedProcessor<CustomPurchasePriceConfig> {
+public class PurchasePriceConfigProcessor extends FileInvestmentAccountBasedProcessor<CustomPurchasePriceConfig> {
 
     @Override
     public CustomPurchasePriceConfig clone(CustomPurchasePriceConfig input, FileReplaceInvestmentAccountBasedValues replaceValues) {
